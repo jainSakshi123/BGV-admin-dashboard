@@ -57,17 +57,14 @@ function CreateService({ setStores, packageID }) {
     onSubmit: async (values, { resetForm }) => {
       try {
         const token = Cookies.get("token");
-        const response = await fetch(
-          `${mainUrl}/admin/add-services/${packageID}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(values),
-          }
-        );
+        const response = await fetch(`${mainUrl}/admin/add-services`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(values),
+        });
         if (response.ok) {
           const responseData = await response.json();
           setStores((prev) => [...prev, responseData.service]);

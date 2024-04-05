@@ -117,20 +117,20 @@ function Navbar() {
                               className="py-1"
                               role="menuitem"
                             >
-                              <DropdownMenuItem className="block px-2 py-2 text-sm text-[#0a0a0a] hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
+                              <DropdownMenuItem className="block px-2 py-2 text-sm text-[#0a0a0a] custom-hover dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
                                 Profile
                               </DropdownMenuItem>
                             </Link>
 
                             {/* <a
-                              className="block px-2 py-2 rounded-sm text-sm text-[#0a0a0a] hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                              className="block px-2 py-2 rounded-sm text-sm text-[#0a0a0a] custom-hover dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                               role="menuitem"
                             >
                               <ChangePassword />
                             </a> */}
-                            {/* <DropdownMenuItem className="block px-2 py-2 text-sm text-[#0a0a0a] hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"> */}
+                            {/* <DropdownMenuItem className="block px-2 py-2 text-sm text-[#0a0a0a] custom-hover dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"> */}
                             <AlertDialog>
-                              <AlertDialogTrigger className="block  py-2 text-sm text-[#0a0a0a] hover:bg-gray-100 my-0 px-2 w-full text-left dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
+                              <AlertDialogTrigger className="block  py-2 text-sm text-[#0a0a0a] custom-hover my-0 px-2 w-full text-left dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
                                 Sign out
                               </AlertDialogTrigger>
                               <AlertDialogContent>

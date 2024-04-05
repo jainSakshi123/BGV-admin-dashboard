@@ -1,26 +1,17 @@
 "use client";
 import { useState } from "react";
 import { Nav } from "../../components/ui/nav";
-
 import { Home, User, Store } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useWindowWidth } from "@react-hook/window-size";
-import ChangePassword from "../admin/change-password/ChangePassword";
 import { useRouter } from "next/navigation";
 import { mainUrl } from "@/app/Config";
 import Cookies from "js-cookie";
-
 import CompanyUserApi from "@/CompanyUserApi";
-import Image from "next/image";
 
 export default function SideNavbar() {
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [open, setOpen] = useState(false);
-
-  const handleDropdownToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
 
   const onlyWidth = useWindowWidth();
   const mobileWidth = onlyWidth < 768;
@@ -102,7 +93,7 @@ export default function SideNavbar() {
             variant: "ghost",
           },
           {
-            title: "Annual Volume",
+            title: "User Information",
             href: "/dashboard/annual-volume",
             icon: Store,
             variant: "ghost",

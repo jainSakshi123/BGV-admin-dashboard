@@ -17,9 +17,6 @@ function IndividualUsers({
   individualUsers,
   setIndividualUsers,
 }) {
-  const router = useRouter();
-  const { toast } = useToast();
-
   return (
     <>
       <DataTableDemo

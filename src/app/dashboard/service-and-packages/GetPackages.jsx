@@ -18,22 +18,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
+import { Eye, Trash2, Pencil } from "lucide-react";
+
 import { useToast } from "@/components/ui/use-toast";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { mainUrl } from "@/app/Config";
-// import CreateStor from "./CreateStor";
 import { useRouter } from "next/navigation";
-import PageTitle from "@/components/PageTitle";
 import DataTableDemo from "@/components/DataTableDemo";
 import CompanyUserApi from "@/CompanyUserApi";
 import CreatePackage from "./CreatePackage";
@@ -54,6 +46,7 @@ function GetPackages({}) {
         return (
           <Button
             variant="ghost"
+            className="text-[#2B4447] font-semibold text-base"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Title
@@ -70,10 +63,12 @@ function GetPackages({}) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="capitalize">{truncatedtitle}</div>
+                <div className="capitalize font-medium text-base text-[#637381]">
+                  {truncatedtitle}
+                </div>
               </TooltipTrigger>
               <TooltipContent>
-                <div className="capitalize">{title}</div>
+                <div className="capitalize ">{title}</div>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -86,6 +81,7 @@ function GetPackages({}) {
         return (
           <Button
             variant="ghost"
+            className="text-[#2B4447] font-semibold text-base"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             price
@@ -94,74 +90,82 @@ function GetPackages({}) {
         );
       },
       cell: ({ row }) => {
-        return <div className="capitalize">{row.getValue("pricing")}</div>;
+        return (
+          <div className="capitalize font-medium text-base text-[#637381]">
+            {row.getValue("pricing")}
+          </div>
+        );
       },
     },
 
     {
       id: "action",
       enableHiding: false,
+      header: () => {
+        return (
+          <Button
+            variant="ghost"
+            className="text-[#2B4447] font-semibold text-base"
+          >
+            Actions
+          </Button>
+        );
+      },
       cell: ({ row }) => {
         const payment = row.original;
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <div className="flex justify-start items-center gap-1">
+            <Button
+              variant="ghost"
+              onClick={() =>
+                router.push(
+                  `/dashboard/service-and-packages/view-all-services/${payment._id}`
+                )
+              }
+              className="h-8 w-8 p-0 rounded-sm hover:border-[#FF8A00] hover:border border  border-[#0000]"
+            >
+              <Eye className="h-4 w-4 text-[#637381]" />
+            </Button>
 
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() =>
-                  router.push(
-                    `/dashboard/service-and-packages/view-all-services/${payment._id}`
-                  )
-                }
-              >
-                View Services
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() =>
-                  router.push(
-                    `/dashboard/service-and-packages/edit-package/${payment._id}`
-                  )
-                }
-              >
-                Edit user
-              </DropdownMenuItem>
-              <AlertDialog>
-                <AlertDialogTrigger className="relative custom-hover  w-full cursor-pointer my-0 flex  select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  Delete Package
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you sure you want to proceed with deleting this
-                      Service?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Deleting this Service will remove the data permanently.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      className="my-0"
-                      onClick={() => handleDelete(payment._id)}
-                    >
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            <Button
+              onClick={() =>
+                router.push(
+                  `/dashboard/service-and-packages/edit-package/${payment._id}`
+                )
+              }
+              variant="ghost"
+              className="h-8 w-8 p-0 rounded-sm hover:border-[#FF8A00] hover:border border  border-[#0000]"
+            >
+              <Pencil className="h-4 w-4 text-[#637381]" />
+            </Button>
+
+            <AlertDialog>
+              <AlertDialogTrigger className="relative hover:border-[#FF8A00] border border-[#0000] hover:border custom-hover  w-fit cursor-pointer my-0 flex  select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                <Trash2 className="h-4 w-4 text-[#637381]" />
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Are you sure you want to proceed with deleting this Service?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Deleting this Service will remove the data permanently.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-[#FF8A00] rounded-[5px] text-[#fff] border-[2px] border-[#FF8A00] my-0">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className="bg-[#fff] rounded-[5px] text-[#FF8A00] border-[2px] border-[#FF8A00] my-0"
+                    onClick={() => handleDelete(payment._id)}
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         );
       },
     },
