@@ -15,14 +15,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { mainUrl } from "../../Config";
@@ -108,123 +110,123 @@ function Popup({ setuserData, userData }) {
   }, []);
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger asChild>
-        <div className="bg-[#FF8A00] rounded-[5px] flex justify-center items-center cursor-pointer gap-2 py-2 px-4 text-base font-semibold text-[#fff]">
-          <Pencil className="w-4 " />
-          Edit Profile
-        </div>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <div className="absolute right-4 cursor-pointer top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-              <Cross2Icon className="h-4 w-4" />
-            </div>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                {" "}
-                Are you sure you want to leave?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                Closing the dialog box will discard the information. Are you
-                certain you want to proceed?
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="bg-[#fff] rounded-[5px] text-[#FF8A00] border-[2px] border-[#FF8A00] my-0">
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="bg-[#FF8A00] rounded-[5px] text-[#fff] border-[2px] border-[#FF8A00] my-0"
-                onClick={() => {
-                  closeDialog();
-                  // formik.resetForm();
-                }}
-              >
-                Continue
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-        <DialogHeader>
-          <DialogTitle>Admin Profile Edit</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you are done.
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={formik.handleSubmit}>
-          <div className="grid py-4">
-            <div className="">
-              <Label htmlFor="firstName" className="text-right">
-                First Name
-              </Label>
-              <Input
-                id="firstName"
-                placeholder="Enter First Name"
-                name="firstName"
-                value={formik.values.firstName}
-                onChange={formik.handleChange}
-                className="col-span-3"
-              />
-              {formik.touched.firstName && formik.errors.firstName && (
-                <div className="text-red-500 text-xs ">
-                  {formik.errors.firstName}
+    <>
+      <Sheet open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <SheetTrigger asChild>
+          <div className="bg-[#FF8A00] rounded-[5px] flex justify-center items-center cursor-pointer gap-2 py-2 px-4 text-base font-semibold text-[#fff]">
+            <Pencil className="w-4 " />
+            Edit Profile
+          </div>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <div className="absolute right-4 cursor-pointer top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+                  <Cross2Icon className="h-4 w-4" />
+                </div>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    {" "}
+                    Are you sure you want to leave?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Closing the dialog box will discard the information. Are you
+                    certain you want to proceed?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-[#fff] rounded-[5px] text-[#FF8A00] border-[2px] border-[#FF8A00] my-0">
+                    Cancel
+                  </AlertDialogCancel>
+                  <SheetClose asChild>
+                    <AlertDialogAction className="bg-[#FF8A00] rounded-[5px] text-[#fff] border-[2px] border-[#FF8A00] my-0">
+                      Continue
+                    </AlertDialogAction>
+                  </SheetClose>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <SheetTitle>Edit profile</SheetTitle>
+            <SheetDescription>
+              Make changes to your profile here. Click save when you are done.
+            </SheetDescription>
+          </SheetHeader>
+          <form onSubmit={formik.handleSubmit}>
+            <div className="grid py-4">
+              <div className="">
+                <Label htmlFor="firstName" className="text-right">
+                  First Name
+                </Label>
+                <Input
+                  id="firstName"
+                  placeholder="Enter First Name"
+                  name="firstName"
+                  value={formik.values.firstName}
+                  onChange={formik.handleChange}
+                  className="col-span-3"
+                />
+                {formik.touched.firstName && formik.errors.firstName && (
+                  <div className="text-red-500 text-xs ">
+                    {formik.errors.firstName}
+                  </div>
+                )}
+              </div>
+
+              <div className="">
+                <Label htmlFor="lastName" className="text-right">
+                  Last Name
+                </Label>
+                <Input
+                  placeholder="Enter Last Name"
+                  id="lastName"
+                  name="lastName"
+                  value={formik.values.lastName}
+                  onChange={formik.handleChange}
+                  className="col-span-3"
+                />
+              </div>
+              {formik.errors.lastName && formik.touched.lastName && (
+                <div className="text-red-500 text-xs">
+                  {formik.errors.lastName}
+                </div>
+              )}
+              <div className="">
+                <Label htmlFor="contactNo" className="text-right">
+                  Contact Number
+                </Label>
+                <Input
+                  placeholder="Enter Contact Number"
+                  id="contactNo"
+                  name="contactNo"
+                  value={formik.values.contactNo}
+                  onChange={formik.handleChange}
+                  className="col-span-3"
+                />
+              </div>
+              {formik.errors.contactNo && formik.touched.contactNo && (
+                <div className="text-red-500 text-xs">
+                  {formik.errors.contactNo}
                 </div>
               )}
             </div>
 
-            <div className="">
-              <Label htmlFor="lastName" className="text-right">
-                Last Name
-              </Label>
-              <Input
-                placeholder="Enter Last Name"
-                id="lastName"
-                name="lastName"
-                value={formik.values.lastName}
-                onChange={formik.handleChange}
-                className="col-span-3"
-              />
-            </div>
-            {formik.errors.lastName && formik.touched.lastName && (
-              <div className="text-red-500 text-xs">
-                {formik.errors.lastName}
-              </div>
-            )}
-            <div className="">
-              <Label htmlFor="contactNo" className="text-right">
-                Contact Number
-              </Label>
-              <Input
-                placeholder="Enter Contact Number"
-                id="contactNo"
-                name="contactNo"
-                value={formik.values.contactNo}
-                onChange={formik.handleChange}
-                className="col-span-3"
-              />
-            </div>
-            {formik.errors.contactNo && formik.touched.contactNo && (
-              <div className="text-red-500 text-xs">
-                {formik.errors.contactNo}
-              </div>
-            )}
-          </div>
-
-          <DialogFooter>
-            <Button
-              type="submit"
-              className="bg-[#FF8A00] rounded-[5px] text-[#fff]"
-            >
-              Save changes
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+            <SheetFooter>
+              {/* <SheetClose asChild> */}
+              <Button
+                type="submit"
+                className="bg-[#FF8A00] rounded-[5px] text-[#fff]"
+              >
+                Save changes
+              </Button>
+              {/* </SheetClose> */}
+            </SheetFooter>
+          </form>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 }
 

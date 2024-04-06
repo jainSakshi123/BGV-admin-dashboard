@@ -9,6 +9,7 @@ import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { mainUrl } from "@/app/Config";
 import Cookies from "js-cookie";
+import { useToast } from "@/components/ui/use-toast";
 // import socket from "@/socket/socket";
 
 const initialValues = {
@@ -17,6 +18,7 @@ const initialValues = {
 };
 
 const Page = () => {
+  const { toast } = useToast();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -57,7 +59,10 @@ const Page = () => {
             resetForm();
             router.push("/dashboard");
           } else {
-            alert(data?.message);
+            toast({
+              title: data?.message,
+              duration: 2000,
+            });
           }
         });
     },

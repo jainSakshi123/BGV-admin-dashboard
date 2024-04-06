@@ -9,6 +9,16 @@ import { ToastAction } from "@/components/ui/toast";
 import CompanyUserApi from "@/CompanyUserApi";
 import Select from "react-select";
 import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -112,121 +122,125 @@ function CreatePackage({ setStores }) {
 
   return (
     <>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger asChild>
+      <Drawer open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DrawerTrigger>
           <Button
             variant="outline"
             className="bg-[#FF8A00] text-white rounded-[5px] border-none hover:border hover:border-[#FF8A00] absolute top-[11px] right-0"
           >
             Create Package
           </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[1000px] ">
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <div className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-                <Cross2Icon className="h-4 w-4" />
-              </div>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  {" "}
-                  Are you sure you want to leave?
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  Closing the dialog box will discard the information. Are you
-                  certain you want to proceed?
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className="bg-[#fff] rounded-[5px] text-[#FF8A00] border-[2px] border-[#FF8A00] my-0">
-                  Cancel
-                </AlertDialogCancel>
-                <AlertDialogAction
-                  className="bg-[#FF8A00] rounded-[5px] text-[#fff] border-[2px] border-[#FF8A00] my-0"
-                  onClick={() => {
-                    closeDialog();
-                    formik.resetForm();
-                  }}
-                >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-          <DialogHeader className="mb-5">
-            <form
-              onSubmit={formik.handleSubmit}
-              className="flex flex-col gap-5"
+        </DrawerTrigger>
+        <DrawerContent className="justify-center">
+          <DrawerHeader className="flex justify-center">
+            <div
+              className="md:w-[500px] w-full relative pt-8 px-5"
+              style={{ boxShadow: "0px 0px 4px #c8c8c8" }}
             >
-              <div className="  ">
-                <div className="grid  grid-cols-12 gap-4 ">
-                  <div className=" col-span-4">
-                    <Label htmlFor="title">Title</Label>
-                    <Input
-                      id="title"
-                      name="title"
-                      value={formik.values.title}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      className="col-span-3"
-                      placeholder="Enter Service Name"
-                    />
-                    {formik.touched.title && formik.errors.title && (
-                      <div className="text-red-500 text-xs">
-                        {formik.errors.title}
-                      </div>
-                    )}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <div className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+                    <Cross2Icon className="h-4 w-4" />
                   </div>
-                  <div className=" col-span-4">
-                    <Label htmlFor="pricing">Price</Label>
-                    <Input
-                      type="text"
-                      placeholder="Enter pricing"
-                      id="pricing"
-                      name="pricing"
-                      value={formik.values.pricing}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      className="col-span-3"
-                    />
-                    {formik.touched.pricing && formik.errors.pricing && (
-                      <div className="text-red-500 text-xs">
-                        {formik.errors.pricing}
-                      </div>
-                    )}
-                  </div>
-                  <div className=" col-span-4">
-                    <Label>Service Name</Label>
-                    <Select
-                      className="my-[10px]"
-                      closeMenuOnSelect={false}
-                      options={options}
-                      isMulti
-                      onChange={(selectedOptions) => {
-                        formik.setFieldValue(
-                          "serviceIds",
-                          selectedOptions.map((option) => option.serviceId)
-                        );
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you sure you want to leave?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Closing the dialog box will discard the information. Are
+                      you certain you want to proceed?
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="bg-[#fff] rounded-[5px] text-[#FF8A00] border-[2px] border-[#FF8A00] my-0">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-[#FF8A00] rounded-[5px] text-[#fff] border-[2px] border-[#FF8A00] my-0"
+                      onClick={() => {
+                        closeDialog();
+                        formik.resetForm();
                       }}
-                    />
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              <form
+                onSubmit={formik.handleSubmit}
+                className="flex flex-col gap-5"
+              >
+                <div className="  ">
+                  <div className="grid  grid-cols-12 gap-4 ">
+                    <div className=" col-span-12">
+                      <Label>Service Name</Label>
+                      <Select
+                        className="my-[10px]"
+                        closeMenuOnSelect={false}
+                        options={options}
+                        isMulti
+                        onChange={(selectedOptions) => {
+                          formik.setFieldValue(
+                            "serviceIds",
+                            selectedOptions.map((option) => option.serviceId)
+                          );
+                        }}
+                      />
+                    </div>
+                    <div className=" col-span-6">
+                      <Label htmlFor="title">Title</Label>
+                      <Input
+                        id="title"
+                        name="title"
+                        value={formik.values.title}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="col-span-6"
+                        placeholder="Enter Service Name"
+                      />
+                      {formik.touched.title && formik.errors.title && (
+                        <div className="text-red-500 text-xs">
+                          {formik.errors.title}
+                        </div>
+                      )}
+                    </div>
+                    <div className=" col-span-6">
+                      <Label htmlFor="pricing">Price</Label>
+                      <Input
+                        type="text"
+                        placeholder="Enter pricing"
+                        id="pricing"
+                        name="pricing"
+                        value={formik.values.pricing}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="col-span-3"
+                      />
+                      {formik.touched.pricing && formik.errors.pricing && (
+                        <div className="text-red-500 text-xs">
+                          {formik.errors.pricing}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <DialogFooter>
-                <Button
-                  type="submit"
-                  className="bg-[#FF8A00] rounded-[5px] text-[#fff]"
-                >
-                  Create Service
-                </Button>
-              </DialogFooter>
-            </form>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+                <DialogFooter>
+                  <Button
+                    type="submit"
+                    className="bg-[#FF8A00] rounded-[5px] text-[#fff]"
+                  >
+                    Create Package
+                  </Button>
+                </DialogFooter>
+              </form>
+            </div>
+          </DrawerHeader>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }

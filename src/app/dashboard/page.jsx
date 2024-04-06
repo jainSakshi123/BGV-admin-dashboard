@@ -97,13 +97,13 @@ export default function Home() {
             ))}
       </section>
 
-      <section className="grid grid-cols-1 gap-4 transition-all lg:grid-cols-2">
+      {/* <section className="grid grid-cols-1 gap-4 transition-all lg:grid-cols-2">
         <CardContent>
-          <p className="p-4 font-semibold">Monthly Meeting Data Analysis</p>
+          <p className="p-4 font-semibold">Monthly Meeting Data Analysis</p> */}
 
-          {/* <UserBarChart /> */}
-        </CardContent>
-        <CardContent className="flex justify-start gap-4">
+      {/* <UserBarChart /> */}
+      {/* </CardContent> */}
+      {/* <CardContent className="flex justify-start gap-4">
           <section>
             <p className="font-semibold py-4">Recent Meetings</p>
           </section>
@@ -160,8 +160,8 @@ export default function Home() {
               </svg>
             </div>
           )}
-        </CardContent>
-      </section>
+        </CardContent> */}
+      {/* </section> */}
     </div>
   );
 }

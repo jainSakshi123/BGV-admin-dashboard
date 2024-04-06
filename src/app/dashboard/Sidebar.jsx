@@ -94,7 +94,7 @@ export default function SideNavbar() {
           },
           {
             title: "User Information",
-            href: "/dashboard/annual-volume",
+            href: "/dashboard/user-information",
             icon: Store,
             variant: "ghost",
           },

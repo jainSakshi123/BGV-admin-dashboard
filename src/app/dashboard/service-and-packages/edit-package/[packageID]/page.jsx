@@ -144,14 +144,14 @@ function Page({ params }) {
               </div>
             </div>
           </div>
-          <DialogFooter>
-            <Button
-              type="submit"
-              className="bg-[#FF8A00] rounded-[5px] text-[#fff] border-[2px] border-[#FF8A00] my-0"
-            >
-              Save details
-            </Button>
-          </DialogFooter>
+          {/* <DialogFooter> */}
+          <Button
+            type="submit"
+            className="bg-[#FF8A00] rounded-[5px] text-[#fff] border-[2px] border-[#FF8A00] my-0"
+          >
+            Save details
+          </Button>
+          {/* </DialogFooter> */}
         </form>
       </div>
     </>

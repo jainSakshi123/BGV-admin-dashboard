@@ -110,7 +110,7 @@ function AddVolume({
             Add
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[1000px] ">
+        <DialogContent className="sm:max-w-[400px] ">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <div className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
@@ -150,7 +150,7 @@ function AddVolume({
             >
               <div className="  ">
                 <div className="grid  grid-cols-12 gap-4 ">
-                  <div className=" col-span-4">
+                  <div className=" col-span-12">
                     <Label htmlFor="options">Options</Label>
                     <Input
                       id="options"
