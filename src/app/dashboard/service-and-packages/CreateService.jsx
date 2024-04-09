@@ -165,8 +165,21 @@ function CreateService({ setStores, packageID }) {
                         placeholder="Enter Price"
                         id="price"
                         name="price"
-                        value={formik.values.price}
-                        onChange={formik.handleChange}
+                        value={`${formik.values.price}`}
+                        onChange={(e) => {
+                          let price = e.target.value.replace(/[^0-9.]/g, "");
+                          const [integerPart, decimalPart] = price.split(".");
+                          if (decimalPart) {
+                            price = `${integerPart}.${decimalPart.slice(0, 2)}`;
+                          }
+                          formik.handleChange({
+                            target: {
+                              id: "price",
+                              name: "price",
+                              value: `$${price}`,
+                            },
+                          });
+                        }}
                         onBlur={formik.handleBlur}
                         className="col-span-3"
                       />

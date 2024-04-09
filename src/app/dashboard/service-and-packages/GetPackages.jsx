@@ -92,7 +92,7 @@ function GetPackages({}) {
       cell: ({ row }) => {
         return (
           <div className="capitalize font-medium text-base text-[#637381]">
-            {row.getValue("pricing")}
+            {row.getValue("pricing")}/Check
           </div>
         );
       },
@@ -229,7 +229,8 @@ function GetPackages({}) {
       <div className="relative">
         <CreatePackage setStores={setStores} data={stores} />
         <DataTableDemo
-          userName={"title"}
+          // userName={"title"}
+          setSearchData={setSearchData}
           page={page}
           setPage={setPage}
           data={stores}

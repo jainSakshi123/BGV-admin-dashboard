@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { Eye, Trash2, Pencil } from "lucide-react";
 import { mainUrl } from "@/app/Config";
 import { useRouter } from "next/navigation";
 import CompanyUserApi from "@/CompanyUserApi";
@@ -127,8 +128,8 @@ function ShowContractorOrgStrength() {
               </p>
               <div className="flex justify-between items-center gap-2">
                 <AlertDialog>
-                  <AlertDialogTrigger className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-custom-orange h-9 px-4 py-2 edit capitalize bg-[#000] text-white rounded-md">
-                    Delete
+                  <AlertDialogTrigger className="h-8 w-8 p-0 rounded-sm hover:border-[#FF8A00] hover:border border  border-[#0000] custom-hover flex justify-center items-center">
+                    <Trash2 className="h-4 w-4 text-[#637381]" />
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>

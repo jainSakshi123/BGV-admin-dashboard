@@ -7,6 +7,7 @@ import { ToastAction } from "@/components/ui/toast";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
+import { Eye, Trash2, Pencil } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,7 +36,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import CreateService from "../../CreateService";
 import { useToast } from "@/components/ui/use-toast";
 const ViewAllServices = ({ params }) => {
   const router = useRouter();
@@ -146,10 +146,10 @@ const ViewAllServices = ({ params }) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="capitalize">{truncatedserviceName}</div>
+                <div className="capitalize py-3">{truncatedserviceName}</div>
               </TooltipTrigger>
               <TooltipContent>
-                <div className="capitalize">{serviceName}</div>
+                <div className="capitalize ">{serviceName}</div>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -177,51 +177,46 @@ const ViewAllServices = ({ params }) => {
     {
       id: "action",
       enableHiding: false,
+      header: () => {
+        return (
+          <Button
+            variant="ghost"
+            className="text-[#2B4447] font-semibold text-base"
+          >
+            Actions
+          </Button>
+        );
+      },
       cell: ({ row }) => {
         const payment = row.original;
 
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-              <DropdownMenuSeparator />
-
-              <AlertDialog>
-                <AlertDialogTrigger className="relative custom-hover w-full cursor-pointer my-0 flex  select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  Delete Service
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you sure you want to proceed with deleting this
-                      Service?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Deleting this Service will remove the data permanently.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel className="bg-[#FF8A00] rounded-[5px] text-[#fff] border-[2px] border-[#FF8A00] my-0">
-                      Cancel
-                    </AlertDialogCancel>
-                    <AlertDialogAction
-                      className="bg-[#fff] rounded-[5px] text-[#FF8A00] border-[2px] border-[#FF8A00] my-0"
-                      onClick={() => handleDelete(payment.serviceId)}
-                    >
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <AlertDialog>
+            <AlertDialogTrigger className="relative hover:border-[#FF8A00] border border-[#0000] hover:border custom-hover  w-fit cursor-pointer my-0 flex  select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+              <Trash2 className="h-4 w-4 text-[#637381]" />
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Are you sure you want to proceed with deleting this Service?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  Deleting this Service will remove the data permanently.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="bg-[#FF8A00] rounded-[5px] text-[#fff] border-[2px] border-[#FF8A00] my-0">
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  className="bg-[#fff] rounded-[5px] text-[#FF8A00] border-[2px] border-[#FF8A00] my-0"
+                  onClick={() => handleDelete(payment.serviceId)}
+                >
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         );
       },
     },
@@ -295,7 +290,8 @@ const ViewAllServices = ({ params }) => {
         </form>
 
         <DataTableDemo
-          setSearchData={setSearchData}
+          // setSearchData={setSearchData}
+          userName={"serviceName"}
           page={page}
           setPage={setPage}
           data={store}

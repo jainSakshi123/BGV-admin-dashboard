@@ -131,7 +131,20 @@ function Page({ params }) {
                   name="pricing"
                   placeholder="Enter Store pricing"
                   value={formik.values.pricing}
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    let price = e.target.value.replace(/[^0-9.]/g, "");
+                    const [integerPart, decimalPart] = price.split(".");
+                    if (decimalPart) {
+                      price = `${integerPart}.${decimalPart.slice(0, 2)}`;
+                    }
+                    formik.handleChange({
+                      target: {
+                        id: "pricing",
+                        name: "pricing",
+                        value: `$${price}`,
+                      },
+                    });
+                  }}
                   onBlur={formik.handleBlur}
                   className="col-span-3 mt-2"
                   disabled={formik.values.placeId !== undefined}

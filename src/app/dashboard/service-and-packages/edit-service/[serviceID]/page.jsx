@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useFormik } from "formik";
 import { ToastAction } from "@/components/ui/toast";
@@ -19,6 +19,7 @@ function Page({ params }) {
   const formikRef = useRef();
   const { toast } = useToast();
   const router = useRouter();
+  const [charCount, setCharCount] = useState(0);
 
   const getToken = () => {
     return Cookies.get("token") || null;
@@ -55,7 +56,7 @@ function Page({ params }) {
         if (data.status === true) {
           handleBackClick();
           toast({
-            title: "The store information has been updated successfully.",
+            title: "The service information has been updated successfully.",
             duration: 2000,
           });
         } else {
@@ -97,7 +98,11 @@ function Page({ params }) {
   useEffect(() => {
     fetchStoreById();
   }, [params.serviceID]);
-
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setCharCount(value.length); // Update character count
+    // If you're also using formik, you can call formik.handleChange here
+  };
   return (
     <>
       <div className=" gap-5 mt-4  w-full">
@@ -135,7 +140,20 @@ function Page({ params }) {
                   name="price"
                   placeholder="Enter Price"
                   value={formik.values.price}
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    let price = e.target.value.replace(/[^0-9.]/g, "");
+                    const [integerPart, decimalPart] = price.split(".");
+                    if (decimalPart) {
+                      price = `${integerPart}.${decimalPart.slice(0, 2)}`;
+                    }
+                    formik.handleChange({
+                      target: {
+                        id: "price",
+                        name: "price",
+                        value: `$${price}`,
+                      },
+                    });
+                  }}
                   onBlur={formik.handleBlur}
                   className="col-span-3 mt-2"
                   disabled={formik.values.placeId !== undefined}
@@ -155,12 +173,19 @@ function Page({ params }) {
                 id="description"
                 name="description"
                 value={formik.values.description}
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  formik.handleChange(e);
+                }}
                 placeholder="Enter Description"
                 onBlur={formik.handleBlur}
                 className="col-span-3 mt-2"
                 disabled={formik.values.placeId !== undefined}
+                maxLength={100}
               />
+              <div className="text-[#939393] text-xs">
+                Character Count: {charCount}
+              </div>
               {formik.touched.description && formik.errors.description && (
                 <div className="text-red-500 text-xs">
                   {formik.errors.description}

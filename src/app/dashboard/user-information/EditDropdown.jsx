@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Eye, Trash2, Pencil } from "lucide-react";
 import { useFormik } from "formik";
 import { validationGetOptions } from "@/app/ValidationScema/Index";
 import Cookies from "js-cookie";
@@ -101,9 +102,10 @@ function EditDrpdown({ params, option, setContractorOrg, apiURL }) {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            className="bg-[#000] text-white rounded-[5px] border-none hover:border hover:border-[#FF8A00] "
+            className="h-8 w-8 p-0 rounded-sm hover:border-[#FF8A00] hover:border border  border-[#0000]"
+            // className="bg-[#000] text-white rounded-[5px] border-none hover:border hover:border-[#FF8A00] "
           >
-            Edit
+            <Pencil className="h-4 w-4 text-[#637381]" />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[400px] ">

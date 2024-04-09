@@ -13,11 +13,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Trash2, Pencil } from "lucide-react";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
@@ -60,18 +59,18 @@ function GetService({}) {
             : serviceName;
 
         return (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="capitalize font-medium text-base text-[#637381]">
+          <>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <div className="capitalize font-medium text-base text-[#637381] cursor-pointer">
                   {truncatedserviceName}
                 </div>
-              </TooltipTrigger>
-              <TooltipContent>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-[200px]">
                 <div className="capitalize">{serviceName}</div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+              </HoverCardContent>
+            </HoverCard>
+          </>
         );
       },
     },
@@ -91,23 +90,8 @@ function GetService({}) {
       },
       cell: ({ row }) => {
         const price = row.getValue("price");
-        const truncatedprice =
-          price.length > 20 ? `${price.slice(0, 20)}...` : price;
 
-        return (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="capitalize font-medium text-base text-[#637381]">
-                  {truncatedprice}
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div className="capitalize">{price}</div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        );
+        return <div className="capitalize">{price}/check</div>;
       },
     },
     {
@@ -132,18 +116,18 @@ function GetService({}) {
             : description;
 
         return (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="capitalize font-medium text-base text-[#637381]">
+          <>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <div className="capitalize font-medium text-base text-[#637381] cursor-pointer">
                   {truncateddescription}
                 </div>
-              </TooltipTrigger>
-              <TooltipContent>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-80">
                 <div className="capitalize">{description}</div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+              </HoverCardContent>
+            </HoverCard>
+          </>
         );
       },
     },

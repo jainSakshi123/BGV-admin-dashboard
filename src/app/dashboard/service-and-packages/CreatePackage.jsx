@@ -215,7 +215,20 @@ function CreatePackage({ setStores }) {
                         id="pricing"
                         name="pricing"
                         value={formik.values.pricing}
-                        onChange={formik.handleChange}
+                        onChange={(e) => {
+                          let price = e.target.value.replace(/[^0-9.]/g, "");
+                          const [integerPart, decimalPart] = price.split(".");
+                          if (decimalPart) {
+                            price = `${integerPart}.${decimalPart.slice(0, 2)}`;
+                          }
+                          formik.handleChange({
+                            target: {
+                              id: "pricing",
+                              name: "pricing",
+                              value: `$${price}`,
+                            },
+                          });
+                        }}
                         onBlur={formik.handleBlur}
                         className="col-span-3"
                       />
