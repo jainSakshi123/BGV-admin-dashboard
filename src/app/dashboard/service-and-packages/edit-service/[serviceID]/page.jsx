@@ -139,7 +139,7 @@ function Page({ params }) {
                   id="price"
                   name="price"
                   placeholder="Enter Price"
-                  value={formik.values.price}
+                  value={`$${formik.values.price}`}
                   onChange={(e) => {
                     let price = e.target.value.replace(/[^0-9.]/g, "");
                     const [integerPart, decimalPart] = price.split(".");
@@ -150,7 +150,7 @@ function Page({ params }) {
                       target: {
                         id: "price",
                         name: "price",
-                        value: `$${price}`,
+                        value: `${price}`,
                       },
                     });
                   }}

@@ -32,7 +32,9 @@ function Page() {
   const [contractorUsers, setContractorUsers] = useState([]);
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
+  const [individualPages, setIndividualPages] = useState(0);
+  const [businessPages, setBusinessPages] = useState(0);
+  const [contractorPages, setContractorPages] = useState(0);
   const [searchData, setSearchData] = useState("");
 
   const columns = [
@@ -71,10 +73,8 @@ function Page() {
           <Button
             variant="ghost"
             className="text-[#2B4447] font-semibold text-base"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             email
-            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
@@ -106,10 +106,8 @@ function Page() {
           <Button
             variant="ghost"
             className="text-[#2B4447] font-semibold text-base"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             contactNo
-            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
@@ -128,10 +126,8 @@ function Page() {
           <Button
             variant="ghost"
             className="text-[#2B4447] font-semibold text-base"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             annualVolumeOfChecks
-            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
@@ -144,28 +140,30 @@ function Page() {
       },
     },
   ];
-  useEffect(() => {
-    const GetCompanyUsers = async () => {
-      try {
-        const data = await CompanyUserApi(
-          `${mainUrl}/admin/get-users?page=${page}&search=${searchData}`,
-          "GET"
-        );
+  const GetCompanyUsers = async () => {
+    try {
+      const data = await CompanyUserApi(
+        `${mainUrl}/admin/get-users?page=${page}&search=${searchData}`,
+        "GET"
+      );
 
-        if (data.status === true) {
-          setIndividualUsers(data.allUsers.individualUsers);
-          setBusinessUsers(data.allUsers.businessUsers);
-          setContractorUsers(data.allUsers.contractorUsers);
-          setShowSkeleton(false);
-          setTotalPages(data?.totalPages);
-        }
-      } catch (error) {
-        setusers([]);
+      if (data.status === true) {
+        setIndividualUsers(data.allUsers.individualUsers.results);
+        setBusinessUsers(data.allUsers.businessUsers.results);
+        setContractorUsers(data.allUsers.contractorUsers.results);
         setShowSkeleton(false);
-        console.error("Error fetching data:", error);
+        setIndividualPages(data.allUsers.individualUsers.totalPages);
+        setBusinessPages(data.allUsers.businessUsers.totalPages);
+        setContractorPages(data.allUsers.contractorUsers.totalPages);
+        // setTotalPages(data?.totalPages);
       }
-    };
-
+    } catch (error) {
+      setusers([]);
+      setShowSkeleton(false);
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
     const reload = () => {
       if (individualUsers.length + 1) {
         GetCompanyUsers();
@@ -176,26 +174,6 @@ function Page() {
 
     GetCompanyUsers();
   }, [page, individualUsers.length, searchData]);
-
-  const handleDelete = async (userId) => {
-    try {
-      const data = await CompanyUserApi(
-        `${mainUrl}/companyUser/delete-user/${userId}`,
-        "DELETE"
-      );
-
-      if (data.status === true) {
-        const updatedUsers = users.filter((user) => user._id !== userId);
-        toast({
-          title: "The user has been deleted successfully ",
-          duration: 2000,
-        });
-        setusers(updatedUsers);
-      }
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
-  };
 
   return (
     <>
@@ -250,7 +228,7 @@ function Page() {
               columns={columns}
               page={page}
               setPage={setPage}
-              totalPages={totalPages}
+              totalPages={individualPages}
               showSkeleton={showSkeleton}
               setSearchData={setSearchData}
             />
@@ -301,7 +279,7 @@ function Page() {
               columns={columns}
               page={page}
               setPage={setPage}
-              totalPages={totalPages}
+              totalPages={businessPages}
               showSkeleton={showSkeleton}
               setSearchData={setSearchData}
             />
@@ -344,7 +322,7 @@ function Page() {
               columns={columns}
               page={page}
               setPage={setPage}
-              totalPages={totalPages}
+              totalPages={contractorPages}
               showSkeleton={showSkeleton}
               setSearchData={setSearchData}
             />

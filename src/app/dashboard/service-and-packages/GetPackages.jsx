@@ -38,6 +38,7 @@ function GetPackages({}) {
   const [totalPages, setTotalPages] = useState(0);
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [searchData, setSearchData] = useState("");
+  const [sort, setSort] = useState("");
 
   const columns = [
     {
@@ -47,10 +48,8 @@ function GetPackages({}) {
           <Button
             variant="ghost"
             className="text-[#2B4447] font-semibold text-base"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Title
-            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
@@ -82,17 +81,15 @@ function GetPackages({}) {
           <Button
             variant="ghost"
             className="text-[#2B4447] font-semibold text-base"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             price
-            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
       cell: ({ row }) => {
         return (
           <div className="capitalize font-medium text-base text-[#637381]">
-            {row.getValue("pricing")}/Check
+            ${row.getValue("pricing")}/Check
           </div>
         );
       },
@@ -173,7 +170,7 @@ function GetPackages({}) {
   const GetUsers = async () => {
     try {
       const data = await CompanyUserApi(
-        `${mainUrl}/admin/get-packages?page=${page}&search=${searchData}`,
+        `${mainUrl}/admin/get-packages?page=${page}&search=${searchData}&sort=${sort}`,
         "GET"
       );
 
@@ -201,7 +198,7 @@ function GetPackages({}) {
     reload();
 
     GetUsers();
-  }, [page, stores.length, searchData]);
+  }, [page, stores.length, searchData, sort]);
 
   const handleDelete = async (serviceID) => {
     try {
@@ -237,6 +234,7 @@ function GetPackages({}) {
           columns={columns}
           totalPages={totalPages}
           showSkeleton={showSkeleton}
+          setSort={setSort}
         />
       </div>
     </>

@@ -36,6 +36,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 function DataTableDemo({
+  setSort,
   search,
   setPage,
   page,
@@ -116,38 +117,41 @@ function DataTableDemo({
             </>
           )}
         </div>
-
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className="ml-auto rounded-md text-base font-normal text-[#101828]"
-            >
-              <ArrowDownWideNarrow style={{ stroke: "#637381" }} />
-              Sort
-              <ChevronDownIcon className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu> */}
+        {setSort && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className="ml-auto rounded-md text-base font-normal text-[#101828] border-[#E7E7E7]"
+              >
+                <ArrowDownWideNarrow style={{ stroke: "#637381" }} />
+                Sort
+                <ChevronDownIcon className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuCheckboxItem
+                className="capitalize px-3 justify-center cursor-pointer"
+                onClick={() => {
+                  setSort("LtoH");
+                  setPage(1);
+                  // console.log("LtoH");
+                }}
+              >
+                Low to high
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                className="capitalize px-3 justify-center cursor-pointer"
+                onClick={() => {
+                  setSort("HtoL");
+                  // console.log("HtoL");
+                }}
+              >
+                High to Low
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
       <div className="rounded-md border">
         <Table className="bg-[#fff] rounded-[6px]">

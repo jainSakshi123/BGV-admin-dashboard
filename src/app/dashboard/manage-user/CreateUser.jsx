@@ -407,9 +407,7 @@ function CreateUser({
                       value={formik.values.annualVolumeOfChecks || ""}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue
-                          placeholder={formik.values.annualVolumeOfChecks}
-                        />
+                        <SelectValue placeholder="Select annual Volume" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>

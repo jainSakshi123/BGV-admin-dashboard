@@ -88,6 +88,7 @@ function Navbar() {
               >
                 Run a background check
               </Button>
+
               <div className="flex items-center">
                 <div className="flex items-center ms-3">
                   <div className="flex items-center">

@@ -126,7 +126,7 @@ function CreatePackage({ setStores }) {
         <DrawerTrigger>
           <Button
             variant="outline"
-            className="bg-[#FF8A00] text-white rounded-[5px] border-none hover:border hover:border-[#FF8A00] absolute top-[11px] right-0"
+            className="bg-[#FF8A00] text-white rounded-[5px] border-none hover:border hover:border-[#FF8A00]  top-[11px] right-0"
           >
             Create Package
           </Button>
@@ -214,7 +214,7 @@ function CreatePackage({ setStores }) {
                         placeholder="Enter pricing"
                         id="pricing"
                         name="pricing"
-                        value={formik.values.pricing}
+                        value={`$${formik.values.pricing}`}
                         onChange={(e) => {
                           let price = e.target.value.replace(/[^0-9.]/g, "");
                           const [integerPart, decimalPart] = price.split(".");
@@ -225,7 +225,7 @@ function CreatePackage({ setStores }) {
                             target: {
                               id: "pricing",
                               name: "pricing",
-                              value: `$${price}`,
+                              value: `${price}`,
                             },
                           });
                         }}

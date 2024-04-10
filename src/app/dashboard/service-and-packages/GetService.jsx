@@ -17,7 +17,6 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
@@ -31,10 +30,12 @@ function GetService({}) {
   const router = useRouter();
   const { toast } = useToast();
   const [stores, setStores] = useState([]);
+  const [sortBy, setSortBy] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [searchData, setSearchData] = useState("");
+  const [sort, setSort] = useState("");
 
   const columns = [
     {
@@ -44,10 +45,8 @@ function GetService({}) {
           <Button
             variant="ghost"
             className="text-[#2B4447] font-semibold text-base"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Service Name
-            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
@@ -81,17 +80,15 @@ function GetService({}) {
           <Button
             variant="ghost"
             className="text-[#2B4447] font-semibold text-base"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Price
-            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
       cell: ({ row }) => {
         const price = row.getValue("price");
 
-        return <div className="capitalize">{price}/check</div>;
+        return <div className="capitalize">${price}/check</div>;
       },
     },
     {
@@ -101,10 +98,8 @@ function GetService({}) {
           <Button
             variant="ghost"
             className="text-[#2B4447] font-semibold text-base"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             description
-            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
@@ -195,10 +190,10 @@ function GetService({}) {
   const GetUsers = async () => {
     try {
       const data = await CompanyUserApi(
-        `${mainUrl}/admin/get-services?page=${page}&search=${searchData}`,
+        `${mainUrl}/admin/get-services?page=${page}&search=${searchData}&sort=${sort}`,
         "GET"
       );
-
+      console.log(data, "data datadatadata");
       if (data.status === true) {
         setShowSkeleton(false);
         setStores(data.services);
@@ -223,7 +218,7 @@ function GetService({}) {
     reload();
 
     GetUsers();
-  }, [page, stores.length, searchData]);
+  }, [page, stores.length, searchData, sort]);
 
   const handleDelete = async (serviceID) => {
     try {
@@ -251,6 +246,7 @@ function GetService({}) {
       <div className="relative">
         <CreateService setStores={setStores} />
         <DataTableDemo
+          setSort={setSort}
           setSearchData={setSearchData}
           page={page}
           setPage={setPage}
