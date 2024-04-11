@@ -170,7 +170,7 @@ const ViewAllServices = ({ params }) => {
         );
       },
       cell: ({ row }) => {
-        return <div className="capitalize">{row.getValue("price")}/check</div>;
+        return <div className="capitalize">${row.getValue("price")}/check</div>;
       },
     },
 

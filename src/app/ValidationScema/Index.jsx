@@ -46,6 +46,9 @@ export const validationResetSchema = Yup.object({
 export const validationGetOptions = Yup.object().shape({
   newOption: Yup.string().required("Option is required"),
 });
+export const validationAddOptions = Yup.object().shape({
+  options: Yup.string().required("Option is required"),
+});
 
 export const validationCreateServiceSchema = Yup.object().shape({
   serviceName: Yup.string().required("Service name is required"),

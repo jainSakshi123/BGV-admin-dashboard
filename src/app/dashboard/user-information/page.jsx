@@ -7,10 +7,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
+import { Building2 } from "lucide-react";
 import ShowAnnualVolume from "./ShowAnnualVolume";
 import ShowBusinessStrength from "./ShowBusinessStrength";
 import ShowContractorOrgStrength from "./ShowContractorOrgStrength";
+import BusinessIndustry from "./BusinessIndustry";
 function Page() {
   return (
     <>
@@ -128,6 +129,25 @@ function Page() {
           </AccordionTrigger>
           <AccordionContent className="border  rounded-md mb-5">
             <ShowContractorOrgStrength />
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem
+          value="item-4"
+          className="mb-5 border  rounded-md px-4"
+          style={{ boxShadow: "0px 0px 5px #00000024" }}
+        >
+          <AccordionTrigger className="font-semibold text-[#667085] text-[18px]">
+            <div className="flex w-[95%] items-center justify-between">
+              <div className="flex justify-start items-center gap-6">
+                <div className="">
+                  <Building2 className="text-[#667085]" />
+                </div>
+                Business Industry
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="border  rounded-md mb-5">
+            <BusinessIndustry />
           </AccordionContent>
         </AccordionItem>
       </Accordion>

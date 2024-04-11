@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useFormik } from "formik";
-import { validationGetOptions } from "@/app/ValidationScema/Index";
+import { validationAddOptions } from "@/app/ValidationScema/Index";
 import Cookies from "js-cookie";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { ToastAction } from "@/components/ui/toast";
@@ -52,7 +52,7 @@ function AddVolume({
     initialValues: {
       options: "",
     },
-    validationSchema: validationGetOptions,
+    validationSchema: validationAddOptions,
     onSubmit: async (values, { resetForm }) => {
       try {
         const token = Cookies.get("token");
@@ -77,6 +77,10 @@ function AddVolume({
           setAnnualVolume((prev) => [
             ...(Array.isArray(prev) ? prev : []), // Ensure prev is an array
             responseData.annualVolume?.options,
+          ]);
+          setAnnualVolume((prev) => [
+            ...(Array.isArray(prev) ? prev : []), // Ensure prev is an array
+            responseData.businessIndustry?.options,
           ]);
           resetForm();
           closeDialog();
