@@ -193,7 +193,7 @@ function GetService({}) {
         `${mainUrl}/admin/get-services?page=${page}&search=${searchData}&sort=${sort}`,
         "GET"
       );
-      console.log(data, "data datadatadata");
+
       if (data.status === true) {
         setShowSkeleton(false);
         setStores(data.services);
