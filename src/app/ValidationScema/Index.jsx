@@ -55,7 +55,15 @@ export const validationCreateServiceSchema = Yup.object().shape({
   description: Yup.string().required("Description is required"),
   price: Yup.string().required("Price is required"),
 });
-
+export const validationUserSchema = Yup.object().shape({
+  firstName: Yup.string().required("First Name is required"),
+  lastName: Yup.string().required("Last Name is required"),
+  contactNo: Yup.string()
+    .matches(/^[0-9]+$/, "Contact number contain only digits")
+    .min(10, "Contact number be at least 10 digits")
+    .max(10, "Contact number must be at least 10 digits")
+    .required("Contact Number is required"),
+});
 export const validationPackageEditSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   pricing: Yup.string().required("Pricing required"),

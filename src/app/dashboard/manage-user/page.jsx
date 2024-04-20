@@ -4,8 +4,6 @@ import { mainUrl } from "@/app/Config";
 import CreateUser from "./CreateUser";
 import CompanyUserApi from "@/CompanyUserApi";
 import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Accordion,
   AccordionContent,
@@ -18,172 +16,171 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import IndividualUsers from "./IndividualUsers";
 import BusinessUsers from "./BusinessUsers";
 import ContractorUsers from "./ContractorUsers";
-
 function Page() {
-  const { toast } = useToast();
-  const [individualUsers, setIndividualUsers] = useState([]);
-  const [businessUsers, setBusinessUsers] = useState([]);
-  const [contractorUsers, setContractorUsers] = useState([]);
-  const [showSkeleton, setShowSkeleton] = useState(true);
-  const [page, setPage] = useState(1);
-  const [individualPages, setIndividualPages] = useState(0);
-  const [businessPages, setBusinessPages] = useState(0);
-  const [contractorPages, setContractorPages] = useState(0);
-  const [searchData, setSearchData] = useState("");
+  // const { toast } = useToast();
+  // const [individualUsers, setIndividualUsers] = useState([]);
+  // const [businessUsers, setBusinessUsers] = useState([]);
+  // const [contractorUsers, setContractorUsers] = useState([]);
+  // const [showSkeleton, setShowSkeleton] = useState(true);
+  // const [page, setPage] = useState(1);
+  // const [individualPages, setIndividualPages] = useState(0);
+  // const [businessPages, setBusinessPages] = useState(0);
+  // const [contractorPages, setContractorPages] = useState(0);
+  // const [searchData, setSearchData] = useState("");
+  // const [sort, setSort] = useState("");
 
-  const columns = [
-    {
-      accessorKey: "firstName",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="text-[#2B4447] font-semibold text-base"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            User Name
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        const fullName = (
-          row.original.firstName +
-          " " +
-          row.original.lastName
-        ).toLowerCase();
+  // const columns = [
+  //   {
+  //     accessorKey: "firstName",
+  //     header: ({ column }) => {
+  //       return (
+  //         <Button
+  //           variant="ghost"
+  //           className="text-[#2B4447] font-semibold text-base"
+  //           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //         >
+  //           User Name
+  //           <ArrowUpDown className="ml-2 h-4 w-4" />
+  //         </Button>
+  //       );
+  //     },
+  //     cell: ({ row }) => {
+  //       const fullName = (
+  //         row.original.firstName +
+  //         " " +
+  //         row.original.lastName
+  //       ).toLowerCase();
 
-        return (
-          <div className="capitalize py-3 font-medium text-base text-[#637381]">
-            {fullName}
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "email",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="text-[#2B4447] font-semibold text-base"
-          >
-            email
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        const email = row.getValue("email");
-        const truncatedemail =
-          email?.length > 20 ? `${email.slice(0, 45)}...` : email;
+  //       return (
+  //         <div className="capitalize py-3 font-medium text-base text-[#637381]">
+  //           {fullName}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     accessorKey: "email",
+  //     header: ({ column }) => {
+  //       return (
+  //         <Button
+  //           variant="ghost"
+  //           className="text-[#2B4447] font-semibold text-base"
+  //         >
+  //           email
+  //         </Button>
+  //       );
+  //     },
+  //     cell: ({ row }) => {
+  //       const email = row.getValue("email");
+  //       const truncatedemail =
+  //         email?.length > 20 ? `${email.slice(0, 45)}...` : email;
 
-        return (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="font-medium text-base text-[#637381]">
-                  {truncatedemail}
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div className="">{email}</div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        );
-      },
-    },
-    {
-      accessorKey: "contactNo",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="text-[#2B4447] font-semibold text-base"
-          >
-            contactNo
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        return (
-          <div className="capitalize font-medium text-base text-[#637381]">
-            {row.getValue("contactNo")}
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "annualVolumeOfChecks",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="text-[#2B4447] font-semibold text-base"
-          >
-            annualVolumeOfChecks
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        return (
-          <div className="capitalize font-medium text-base text-[#637381]">
-            {row.getValue("annualVolumeOfChecks")}
-          </div>
-        );
-      },
-    },
-  ];
-  const GetCompanyUsers = async () => {
-    try {
-      const data = await CompanyUserApi(
-        `${mainUrl}/admin/get-users?page=${page}&search=${searchData}`,
-        "GET"
-      );
+  //       return (
+  //         <TooltipProvider>
+  //           <Tooltip>
+  //             <TooltipTrigger asChild>
+  //               <div className="font-medium text-base text-[#637381]">
+  //                 {truncatedemail}
+  //               </div>
+  //             </TooltipTrigger>
+  //             <TooltipContent>
+  //               <div className="">{email}</div>
+  //             </TooltipContent>
+  //           </Tooltip>
+  //         </TooltipProvider>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     accessorKey: "contactNo",
+  //     header: ({ column }) => {
+  //       return (
+  //         <Button
+  //           variant="ghost"
+  //           className="text-[#2B4447] font-semibold text-base"
+  //         >
+  //           contactNo
+  //         </Button>
+  //       );
+  //     },
+  //     cell: ({ row }) => {
+  //       return (
+  //         <div className="capitalize font-medium text-base text-[#637381]">
+  //           {row.getValue("contactNo")}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     accessorKey: "annualVolumeOfChecks",
+  //     header: ({ column }) => {
+  //       return (
+  //         <Button
+  //           variant="ghost"
+  //           className="text-[#2B4447] font-semibold text-base"
+  //         >
+  //           annualVolumeOfChecks
+  //         </Button>
+  //       );
+  //     },
+  //     cell: ({ row }) => {
+  //       return (
+  //         <div className="capitalize font-medium text-base text-[#637381]">
+  //           {row.getValue("annualVolumeOfChecks")}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  // ];
+  // const GetCompanyUsers = async () => {
+  //   try {
+  //     const data = await CompanyUserApi(
+  //       `${mainUrl}/admin/get-users?page=${page}&search=${searchData}&sort=${sort}`,
+  //       "GET"
+  //     );
 
-      if (data.status === true) {
-        setIndividualUsers(data.allUsers.individualUsers.results);
-        setBusinessUsers(data.allUsers.businessUsers.results);
-        setContractorUsers(data.allUsers.contractorUsers.results);
-        setShowSkeleton(false);
-        setIndividualPages(data.allUsers.individualUsers.totalPages);
-        setBusinessPages(data.allUsers.businessUsers.totalPages);
-        setContractorPages(data.allUsers.contractorUsers.totalPages);
-        // setTotalPages(data?.totalPages);
-      }
-    } catch (error) {
-      setusers([]);
-      setShowSkeleton(false);
-      console.error("Error fetching data:", error);
-    }
-  };
-  useEffect(() => {
-    const reload = () => {
-      if (individualUsers.length + 1) {
-        GetCompanyUsers();
-      }
-    };
+  //     if (data.status === true) {
+  //       setIndividualUsers(data.allUsers.individualUsers.results);
+  //       setBusinessUsers(data.allUsers.businessUsers.results);
+  //       setContractorUsers(data.allUsers.contractorUsers.results);
+  //       setShowSkeleton(false);
+  //       setIndividualPages(data.allUsers.individualUsers.totalPages);
+  //       setBusinessPages(data.allUsers.businessUsers.totalPages);
+  //       setContractorPages(data.allUsers.contractorUsers.totalPages);
+  //       // setTotalPages(data?.totalPages);
+  //     }
+  //   } catch (error) {
+  //     setusers([]);
+  //     setShowSkeleton(false);
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   const reload = () => {
+  //     if (individualUsers.length + 1) {
+  //       GetCompanyUsers();
+  //     }
+  //   };
 
-    reload();
+  //   reload();
 
-    GetCompanyUsers();
-  }, [page, individualUsers.length, searchData]);
+  //   GetCompanyUsers();
+  // }, [page, individualUsers.length, searchData, sort]);
 
   return (
     <>
-      <div className="  text-left md:absolute top-[94px] right-[30px]">
+      {/* <div className="  text-left md:absolute top-[94px] right-[30px]">
         <CreateUser
           setIndividualUsers={setIndividualUsers}
           setBusinessUsers={setBusinessUsers}
           setContractorUsers={setContractorUsers}
         />
-      </div>
+      </div> */}
 
       <Accordion
         type="single"
@@ -223,14 +220,15 @@ function Page() {
           </AccordionTrigger>
           <AccordionContent>
             <IndividualUsers
-              individualUsers={individualUsers}
-              setIndividualUsers={setIndividualUsers}
-              columns={columns}
-              page={page}
-              setPage={setPage}
-              totalPages={individualPages}
-              showSkeleton={showSkeleton}
-              setSearchData={setSearchData}
+            // setSortData={setSort}
+            // individualUsers={individualUsers}
+            // setIndividualUsers={setIndividualUsers}
+            // // columns={columns}
+            // page={page}
+            // setPage={setPage}
+            // totalPages={individualPages}
+            // showSkeleton={showSkeleton}
+            // setSearchData={setSearchData}
             />
           </AccordionContent>
         </AccordionItem>
@@ -274,14 +272,15 @@ function Page() {
           </AccordionTrigger>
           <AccordionContent>
             <BusinessUsers
-              individualUsers={businessUsers}
-              setIndividualUsers={setBusinessUsers}
-              columns={columns}
-              page={page}
-              setPage={setPage}
-              totalPages={businessPages}
-              showSkeleton={showSkeleton}
-              setSearchData={setSearchData}
+            // setSortData={setSort}
+            // individualUsers={businessUsers}
+            // setIndividualUsers={setBusinessUsers}
+            // // columns={columns}
+            // page={page}
+            // setPage={setPage}
+            // totalPages={businessPages}
+            // showSkeleton={showSkeleton}
+            // setSearchData={setSearchData}
             />
           </AccordionContent>
         </AccordionItem>
@@ -317,14 +316,15 @@ function Page() {
           </AccordionTrigger>
           <AccordionContent>
             <ContractorUsers
-              individualUsers={contractorUsers}
-              setIndividualUsers={setContractorUsers}
-              columns={columns}
-              page={page}
-              setPage={setPage}
-              totalPages={contractorPages}
-              showSkeleton={showSkeleton}
-              setSearchData={setSearchData}
+            // setSortData={setSort}
+            // individualUsers={contractorUsers}
+            // setIndividualUsers={setContractorUsers}
+            // // columns={columns }
+            // page={page}
+            // setPage={setPage}
+            // totalPages={contractorPages}
+            // showSkeleton={showSkeleton}
+            // setSearchData={setSearchData}
             />
           </AccordionContent>
         </AccordionItem>

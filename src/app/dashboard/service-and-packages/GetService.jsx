@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/hover-card";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { mainUrl } from "@/app/Config";
 import { useRouter } from "next/navigation";
 import DataTableDemo from "@/components/DataTableDemo";

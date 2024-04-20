@@ -62,7 +62,6 @@ function CreateUser({
   const closeDialog = () => {
     setIsDialogOpen(false);
   };
-
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -344,7 +343,8 @@ function CreateUser({
                         <SelectContent>
                           {countryData.map((user, idx) => (
                             <SelectItem
-                              key={`${idx}+${user.name}+${user.code}`}
+                              // key={`${user.name}-${idx}-${user.code}-${idx.phone_code}`}
+                              key={`${user.name}-${idx}`}
                               value={user.phone_code}
                             >
                               {user.phone_code}

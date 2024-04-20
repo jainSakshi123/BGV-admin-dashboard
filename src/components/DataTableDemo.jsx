@@ -36,6 +36,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 function DataTableDemo({
+  setSortData,
   setSort,
   search,
   setPage,
@@ -117,7 +118,7 @@ function DataTableDemo({
             </>
           )}
         </div>
-        {setSort && (
+        {(setSortData || setSort) && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -133,19 +134,19 @@ function DataTableDemo({
               <DropdownMenuCheckboxItem
                 className="capitalize px-3 justify-center cursor-pointer"
                 onClick={() => {
-                  setSort("LtoH");
+                  setSortData ? setSortData("asc") : setSort("HtoL");
                   setPage(1);
                 }}
               >
-                Low to high
+                {setSort ? " Low to high" : "A to Z"}
               </DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem
                 className="capitalize px-3 justify-center cursor-pointer"
                 onClick={() => {
-                  setSort("HtoL");
+                  setSortData ? setSortData("desc") : setSort("LtoH");
                 }}
               >
-                High to Low
+                {setSort ? "  High to Low" : "Z to A"}
               </DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -250,81 +251,83 @@ function DataTableDemo({
           {table.getFilteredSelectedRowModel().rows?.length} of{" "}
           {table.getFilteredRowModel().rows?.length} row(s) selected.
         </div>
-        <div className="space-x-2 pt-5 flex justify-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-            disabled={page === 1 && 0 === 0}
-            className="hover:bg-[#f7b36a1f] hover:border-[#f6a122] hover:border p-0 h-[40px] w-[100px]  rounded-[5px]"
-          >
-            <ChevronLeft className="w-[18px]" />
-            Previous
-          </Button>
-          {Array.from({ length: totalPages }, (_, index) => {
-            const start = Math.max(Math.min(page - 1, totalPages - 4), 0);
-            const end = Math.min(start + 4, totalPages);
-            const isActive = page === index + 1;
-            if (
-              (index === start && start > 0) ||
-              (index === end - 1 && end < totalPages) ||
-              (index >= start && index < end)
-            ) {
-              return (
-                <Button
-                  key={index}
-                  className={`hover:bg-[#f7b36a1f] hover:text-[#000] p-0 h-[40px] w-[40px] rounded-[5px] hover:border-[#f6a122] hover:border ${
-                    isActive ? "bg-[#f6a122] text-[#fff]" : ""
-                  }`}
-                  variant={page === index + 1 ? "solid" : "outline"}
-                  size="sm"
-                  onClick={() => setPage(index + 1)}
-                >
-                  {index + 1}
-                </Button>
-              );
-            } else if (index === start && start === 0) {
-              return (
-                <Button
-                  key={index}
-                  variant={page === index + 1 ? "solid" : "outline"}
-                  size="sm"
-                  onClick={() => setPage(index + 1)}
-                  className={`hover:bg-[#f7b36a1f] hover:text-[#000] p-0 h-[40px] w-[40px] rounded-[5px] hover:border-[#f6a122] hover:border ${
-                    isActive ? "bg-[#f6a122] text-[#fff]" : ""
-                  }`}
-                >
-                  {index + 1}
-                </Button>
-              );
-            } else if (index === end - 1 && end === totalPages) {
-              return (
-                <Button
-                  key={index}
-                  variant={page === index + 1 ? "solid" : "outline"}
-                  size="sm"
-                  onClick={() => setPage(index + 1)}
-                >
-                  {index + 1}
-                </Button>
-              );
-            } else if (index === start + 1 || index === end - 2) {
-              return <span key={index}>...</span>;
-            } else {
-              return null;
-            }
-          })}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={page === totalPages || (totalPages === undefined && 1)}
-            className="hover:bg-[#f7b36a1f] hover:border-[#f6a122] hover:border p-0 h-[40px] w-[100px]  rounded-[5px]"
-          >
-            Next
-            <ChevronRight className="w-[18px]" />
-          </Button>
-        </div>
+        {page && (
+          <div className="space-x-2 pt-5 flex justify-center">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1 && 0 === 0}
+              className="hover:bg-[#f7b36a1f] hover:border-[#f6a122] hover:border p-0 h-[40px] w-[100px]  rounded-[5px]"
+            >
+              <ChevronLeft className="w-[18px]" />
+              Previous
+            </Button>
+            {Array.from({ length: totalPages }, (_, index) => {
+              const start = Math.max(Math.min(page - 1, totalPages - 4), 0);
+              const end = Math.min(start + 4, totalPages);
+              const isActive = page === index + 1;
+              if (
+                (index === start && start > 0) ||
+                (index === end - 1 && end < totalPages) ||
+                (index >= start && index < end)
+              ) {
+                return (
+                  <Button
+                    key={index}
+                    className={`hover:bg-[#f7b36a1f] hover:text-[#000] p-0 h-[40px] w-[40px] rounded-[5px] hover:border-[#f6a122] hover:border ${
+                      isActive ? "bg-[#f6a122] text-[#fff]" : ""
+                    }`}
+                    variant={page === index + 1 ? "solid" : "outline"}
+                    size="sm"
+                    onClick={() => setPage(index + 1)}
+                  >
+                    {index + 1}
+                  </Button>
+                );
+              } else if (index === start && start === 0) {
+                return (
+                  <Button
+                    key={index}
+                    variant={page === index + 1 ? "solid" : "outline"}
+                    size="sm"
+                    onClick={() => setPage(index + 1)}
+                    className={`hover:bg-[#f7b36a1f] hover:text-[#000] p-0 h-[40px] w-[40px] rounded-[5px] hover:border-[#f6a122] hover:border ${
+                      isActive ? "bg-[#f6a122] text-[#fff]" : ""
+                    }`}
+                  >
+                    {index + 1}
+                  </Button>
+                );
+              } else if (index === end - 1 && end === totalPages) {
+                return (
+                  <Button
+                    key={index}
+                    variant={page === index + 1 ? "solid" : "outline"}
+                    size="sm"
+                    onClick={() => setPage(index + 1)}
+                  >
+                    {index + 1}
+                  </Button>
+                );
+              } else if (index === start + 1 || index === end - 2) {
+                return <span key={index}>...</span>;
+              } else {
+                return null;
+              }
+            })}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages || (totalPages === undefined && 1)}
+              className="hover:bg-[#f7b36a1f] hover:border-[#f6a122] hover:border p-0 h-[40px] w-[100px]  rounded-[5px]"
+            >
+              Next
+              <ChevronRight className="w-[18px]" />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

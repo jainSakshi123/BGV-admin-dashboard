@@ -7,7 +7,7 @@ import { ToastAction } from "@/components/ui/toast";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
-import { Eye, Trash2, Pencil } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,31 +20,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Select from "react-select";
-import { useRouter } from "next/navigation";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 const ViewAllServices = ({ params }) => {
-  const router = useRouter();
   const [store, setStore] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [meetingData, setMeetingData] = useState([]);
   const [showSkeleton, setShowSkeleton] = useState(true);
-  const [searchData, setSearchData] = useState("");
+
   const [serviceData, setServiceData] = useState([]);
   const { toast } = useToast();
   const handleDelete = async (serviceID) => {
@@ -71,14 +52,13 @@ const ViewAllServices = ({ params }) => {
   const fetchData = async () => {
     try {
       const data = await CompanyUserApi(
-        `${mainUrl}/admin/get-packages/${params.packageID}?page=${page}&search=${searchData}`,
+        `${mainUrl}/admin/get-packages/${params.packageID}`,
         "GET"
       );
 
       if (data.status === true) {
         setShowSkeleton(false);
         setStore(data?.package?.services);
-        setTotalPages(data.totalPages);
       } else {
         setShowSkeleton(false);
         console.error("API call was not successful:", data.error);
@@ -91,7 +71,10 @@ const ViewAllServices = ({ params }) => {
   };
   const GetUsers = async () => {
     try {
-      const data = await CompanyUserApi(`${mainUrl}/admin/get-services`, "GET");
+      const data = await CompanyUserApi(
+        `${mainUrl}/admin/get-services?all=1`,
+        "GET"
+      );
 
       if (data.status === true) {
         setServiceData(data.services);
@@ -119,7 +102,7 @@ const ViewAllServices = ({ params }) => {
     reload();
     GetUsers();
     fetchData();
-  }, [page, searchData, params.storeId, store.length]);
+  }, [params.storeId, store.length]);
 
   const columns = [
     {
@@ -136,23 +119,10 @@ const ViewAllServices = ({ params }) => {
         );
       },
       cell: ({ row }) => {
-        const serviceName = row.getValue("serviceName")?.toLowerCase();
-        const truncatedserviceName =
-          serviceName?.length > 20
-            ? `${serviceName?.slice(0, 20)}...`
-            : serviceName;
-
         return (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="capitalize py-3">{truncatedserviceName}</div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div className="capitalize ">{serviceName}</div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <div className="capitalize ">
+            {row.original?.serviceId?.serviceName}
+          </div>
         );
       },
     },
@@ -170,7 +140,11 @@ const ViewAllServices = ({ params }) => {
         );
       },
       cell: ({ row }) => {
-        return <div className="capitalize">${row.getValue("price")}/check</div>;
+        return (
+          <div className="capitalize">
+            $ {row?.original?.serviceId?.price}/check
+          </div>
+        );
       },
     },
 
@@ -188,8 +162,7 @@ const ViewAllServices = ({ params }) => {
         );
       },
       cell: ({ row }) => {
-        const payment = row.original;
-
+        const payment = row?.original?.serviceId;
         return (
           <AlertDialog>
             <AlertDialogTrigger className="relative hover:border-[#FF8A00] border border-[#0000] hover:border custom-hover  w-fit cursor-pointer my-0 flex  select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
@@ -210,7 +183,7 @@ const ViewAllServices = ({ params }) => {
                 </AlertDialogCancel>
                 <AlertDialogAction
                   className="bg-[#fff] rounded-[5px] text-[#FF8A00] border-[2px] border-[#FF8A00] my-0"
-                  onClick={() => handleDelete(payment.serviceId)}
+                  onClick={() => handleDelete(payment._id)}
                 >
                   Continue
                 </AlertDialogAction>
@@ -280,7 +253,7 @@ const ViewAllServices = ({ params }) => {
                 selectedOptions.map((option) => option.serviceId)
               );
             }}
-          />{" "}
+          />
           <Button
             type="submit"
             className="bg-[#FF8A00] rounded-[5px] text-[#fff]"
@@ -290,13 +263,9 @@ const ViewAllServices = ({ params }) => {
         </form>
 
         <DataTableDemo
-          // setSearchData={setSearchData}
           userName={"serviceName"}
-          page={page}
-          setPage={setPage}
           data={store}
           columns={columns}
-          totalPages={totalPages}
           showSkeleton={showSkeleton}
         />
       </div>
