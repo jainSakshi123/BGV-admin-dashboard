@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { mainUrl } from "@/app/Config";
-import CreateUser from "./CreateUser";
 import CompanyUserApi from "@/CompanyUserApi";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -26,10 +25,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Trash2, Pencil } from "lucide-react";
-function BusinessUsers({}) {
+function BusinessUsers({ businessUsers, setBusinessUsers }) {
   const router = useRouter();
   const { toast } = useToast();
-  const [businessUsers, setBusinessUsers] = useState([]);
+
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [page, setPage] = useState(1);
   const [businessPages, setBusinessPages] = useState(1);
@@ -248,11 +247,6 @@ function BusinessUsers({}) {
 
   return (
     <>
-      <CreateUser
-        // setIndividualUsers={setIndividualUsers}
-        setBusinessUsers={setBusinessUsers}
-        // setContractorUsers={setContract/orUsers}
-      />
       <DataTableDemo
         setSortData={setSort}
         setSearchData={setSearchData}

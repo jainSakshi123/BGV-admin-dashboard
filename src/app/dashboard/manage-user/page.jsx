@@ -22,6 +22,9 @@ import IndividualUsers from "./IndividualUsers";
 import BusinessUsers from "./BusinessUsers";
 import ContractorUsers from "./ContractorUsers";
 function Page() {
+  const [individualUsers, setIndividualUsers] = useState([]);
+  const [businessUsers, setBusinessUsers] = useState([]);
+  const [contractorUsers, setContractorUsers] = useState([]);
   // const { toast } = useToast();
   // const [individualUsers, setIndividualUsers] = useState([]);
   // const [businessUsers, setBusinessUsers] = useState([]);
@@ -174,13 +177,13 @@ function Page() {
 
   return (
     <>
-      {/* <div className="  text-left md:absolute top-[94px] right-[30px]">
+      <div className="  text-left md:absolute top-[94px] right-[30px]">
         <CreateUser
           setIndividualUsers={setIndividualUsers}
           setBusinessUsers={setBusinessUsers}
           setContractorUsers={setContractorUsers}
         />
-      </div> */}
+      </div>
 
       <Accordion
         type="single"
@@ -220,15 +223,17 @@ function Page() {
           </AccordionTrigger>
           <AccordionContent>
             <IndividualUsers
-            // setSortData={setSort}
-            // individualUsers={individualUsers}
-            // setIndividualUsers={setIndividualUsers}
-            // // columns={columns}
-            // page={page}
-            // setPage={setPage}
-            // totalPages={individualPages}
-            // showSkeleton={showSkeleton}
-            // setSearchData={setSearchData}
+              setIndividualUsers={setIndividualUsers}
+              individualUsers={individualUsers}
+              // setSortData={setSort}
+              // individualUsers={individualUsers}
+              // setIndividualUsers={setIndividualUsers}
+              // // columns={columns}
+              // page={page}
+              // setPage={setPage}
+              // totalPages={individualPages}
+              // showSkeleton={showSkeleton}
+              // setSearchData={setSearchData}
             />
           </AccordionContent>
         </AccordionItem>
@@ -272,15 +277,17 @@ function Page() {
           </AccordionTrigger>
           <AccordionContent>
             <BusinessUsers
-            // setSortData={setSort}
-            // individualUsers={businessUsers}
-            // setIndividualUsers={setBusinessUsers}
-            // // columns={columns}
-            // page={page}
-            // setPage={setPage}
-            // totalPages={businessPages}
-            // showSkeleton={showSkeleton}
-            // setSearchData={setSearchData}
+              setBusinessUsers={setBusinessUsers}
+              businessUsers={businessUsers}
+              // setSortData={setSort}
+              // individualUsers={businessUsers}
+              // setIndividualUsers={setBusinessUsers}
+              // // columns={columns}
+              // page={page}
+              // setPage={setPage}
+              // totalPages={businessPages}
+              // showSkeleton={showSkeleton}
+              // setSearchData={setSearchData}
             />
           </AccordionContent>
         </AccordionItem>
@@ -316,15 +323,17 @@ function Page() {
           </AccordionTrigger>
           <AccordionContent>
             <ContractorUsers
-            // setSortData={setSort}
-            // individualUsers={contractorUsers}
-            // setIndividualUsers={setContractorUsers}
-            // // columns={columns }
-            // page={page}
-            // setPage={setPage}
-            // totalPages={contractorPages}
-            // showSkeleton={showSkeleton}
-            // setSearchData={setSearchData}
+              contractorUsers={contractorUsers}
+              setContractorUsers={setContractorUsers}
+              // setSortData={setSort}
+              // individualUsers={contractorUsers}
+              // setIndividualUsers={setContractorUsers}
+              // // columns={columns }
+              // page={page}
+              // setPage={setPage}
+              // totalPages={contractorPages}
+              // showSkeleton={showSkeleton}
+              // setSearchData={setSearchData}
             />
           </AccordionContent>
         </AccordionItem>

@@ -26,10 +26,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import DataTableDemo from "@/components/DataTableDemo";
 import { useRouter } from "next/navigation";
-function IndividualUsers({}) {
+function IndividualUsers({ individualUsers, setIndividualUsers }) {
   const router = useRouter();
   const { toast } = useToast();
-  const [individualUsers, setIndividualUsers] = useState([]);
+  // const [individualUsers, setIndividualUsers] = useState([]);
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -247,11 +247,6 @@ function IndividualUsers({}) {
 
   return (
     <>
-      <CreateUser
-        setIndividualUsers={setIndividualUsers}
-        // setBusinessUsers={setBusinessUsers}
-        // setContractorUsers={setContractorUsers}
-      />
       <DataTableDemo
         setSortData={setSort}
         setSearchData={setSearchData}

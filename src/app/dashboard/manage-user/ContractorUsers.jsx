@@ -25,9 +25,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Trash2, Pencil } from "lucide-react";
 import CreateUser from "./CreateUser";
-function ContractorUsers({}) {
+function ContractorUsers({ setContractorUsers, contractorUsers }) {
   const { toast } = useToast();
-  const [contractorUsers, setContractorUsers] = useState([]);
+
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -245,11 +245,6 @@ function ContractorUsers({}) {
   }, [page, contractorUsers.length, searchData, sort]);
   return (
     <>
-      <CreateUser
-        // setIndividualUsers={setIndividualUsers}
-        // setBusinessUsers={setBusinessUsers}
-        setContractorUsers={setContractorUsers}
-      />
       <DataTableDemo
         setSortData={setSort}
         setSearchData={setSearchData}
