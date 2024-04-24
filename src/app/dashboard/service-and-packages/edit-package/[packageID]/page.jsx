@@ -28,11 +28,13 @@ function Page({ params }) {
       title: "",
       pricing: "",
       services: [],
+      removeServiceIds: [],
     },
     validationSchema: validationPackageEditSchema,
     onSubmit: async (values) => {
       try {
-        const { title, pricing, services } = values;
+        const { title, pricing, services, removeServiceIds } = values;
+        // console.log(values.services, "servicesservicesservices");
         const token = getToken();
         if (!token) throw new Error("No auth token");
 
@@ -40,7 +42,12 @@ function Page({ params }) {
           `${mainUrl}/admin/edit-package/${params.packageID}`,
           {
             method: "PUT",
-            body: JSON.stringify({ title, pricing, services }),
+            body: JSON.stringify({
+              title,
+              pricing,
+              services,
+              removeServiceIds,
+            }),
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
@@ -50,7 +57,6 @@ function Page({ params }) {
         const data = await response.json();
 
         if (data.status === true) {
-          formik.setFieldValue("services", selectedServiceValue);
           handleBackClick();
           toast({
             title: "The store information has been updated successfully.",
@@ -81,8 +87,12 @@ function Page({ params }) {
       );
 
       if (data.status === true) {
-        const { title, pricing, services } = data.package;
-
+        const { title, pricing } = data.package;
+        // const services = data?.package?.services;
+        const services = data?.package?.services.map((value) => {
+          return value.serviceId;
+        });
+        console.log(services, "services>.........................");
         formikRef.current.setValues({
           title,
           pricing,
@@ -94,20 +104,24 @@ function Page({ params }) {
     }
   };
   const servicesValue = formik.values.services.map((value) => ({
+    serviceId: value?._id,
+    value: value?.serviceName,
+    label: value?.serviceName,
+  }));
+  console.log(servicesValue, "servicesValue>>>>>>>>>>>>>>>>>>>>>>>>");
+  console.log(formik.values.services, "formik.values.services");
+  const options = selectOptions?.map((value) => ({
     serviceId: value?.serviceId?._id,
     value: value?.serviceId?.serviceName,
     label: value?.serviceId?.serviceName,
   }));
 
-  const options = selectOptions?.map((value) => ({
-    serviceId: value?._id,
-    value: value?.serviceName,
-    label: value?.serviceName,
-  }));
-
   const GetUsers = async () => {
     try {
-      const data = await CompanyUserApi(`${mainUrl}/admin/get-services`, "GET");
+      const data = await CompanyUserApi(
+        `${mainUrl}/admin/get-services?all=1`,
+        "GET"
+      );
 
       if (data.status === true) {
         setSelectOptions(data.services);
@@ -186,12 +200,12 @@ function Page({ params }) {
                 )}
               </div>
             </div>
-            <div className="col-span-4">
+            {/* <div className="col-span-4">
               <Label htmlFor="title">Services Name</Label>
               <Select
                 className="my-[10px]"
                 closeMenuOnSelect={false}
-                defaultValue={servicesValue}
+                value={servicesValue}
                 options={options}
                 isMulti
                 onChange={(selectedOptions) => {
@@ -199,11 +213,14 @@ function Page({ params }) {
                     (option) => option.serviceId
                   );
 
+                  // Update services array with newly selected IDs
                   formik.setFieldValue("services", selectedServiceIds);
-                  setSelectedServiceValue(selectedServiceIds);
+
+                  // Update selected service values for display
+                  // setServicesValue(selectedOptions); // Assuming you have a setServicesValue function
                 }}
               />
-            </div>
+            </div> */}
           </div>
           <Button
             type="submit"

@@ -74,7 +74,7 @@ export default function Home() {
           ? new Array(4).fill(null).map((value, index) => {
               return (
                 <div
-                  key={`${index}-"userCards"`}
+                  key={`${index}-userCards`}
                   className="flex items-center space-x-4 pb-3  w-full  justify-between  rounded-[8px] border py-4 px-5  shadow bg-[#fff] "
                 >
                   <Skeleton className="h-12 w-12 rounded-full" />
@@ -88,7 +88,7 @@ export default function Home() {
           : userCards?.map((d, i) => (
               <>
                 <Card
-                  key={`${i}-"custom-data"`}
+                  key={`${i}-custom-data`}
                   amount={d.amount}
                   icon={d.icon}
                   label={d.label}
